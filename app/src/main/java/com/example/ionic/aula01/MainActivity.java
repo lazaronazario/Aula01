@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,20 +33,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                double gasolina = Double.parseDouble(ETG.getText().toString());
-                double alcool = Double.parseDouble(ETA.getText().toString());
+                double gasolina = (ETG.getText().toString() == null || ETG.getText().toString().equals("") ? 0 : Double.parseDouble(ETG.getText().toString()));
+                double alcool = (ETA.getText().toString() == null || ETA.getText().toString().equals("") ? 0 : Double.parseDouble(ETA.getText().toString()));
 
-                String Resultado ;
+                String Resultado = null;
 
-                if((gasolina * 0.7)> alcool){
-                    Resultado = "Àlcool";
+                if(gasolina == alcool ) {
 
-                }else{
-                    Resultado = "Gasolina";
+                    Toast.makeText(getApplicationContext(), "Campos iguais", Toast.LENGTH_LONG).show();
+                    
+                }else if (gasolina < 0 || alcool < 0) {
 
-                }
-                textResult.setText(Resultado);
+                    Toast.makeText(getApplicationContext(), "Campo em branco", Toast.LENGTH_LONG).show();
+
+                }else
+
+                    if ((gasolina * 0.7) > alcool) {
+                        Resultado = "Álcool";
+
+                    } else {
+                        Resultado = "Gasolina";
+
+                    }
+                    textResult.setText("A melhor opção é: " + Resultado);
+
             }
+
+
+
         });
 
     }
